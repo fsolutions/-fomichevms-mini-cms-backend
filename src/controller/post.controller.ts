@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import {
   CreatePostInput,
   UpdatePostInput,
+  DeletePostInput,
+  ReadPostInput
 } from "../schema/post.schema";
 import {
   createPost,
@@ -33,7 +35,7 @@ export async function updatePostHandler(
   const postId = req.params.postId;
   const update = req.body;
 
-  const post = await findPost({ postId });
+  const post = await findPost({ _id: postId });
 
   if (!post) {
     return res.sendStatus(404);
@@ -43,7 +45,7 @@ export async function updatePostHandler(
     return res.sendStatus(403);
   }
 
-  const updatedPost = await findAndUpdatePost({ postId }, update, {
+  const updatedPost = await findAndUpdatePost({ _id: postId }, update, {
     new: true,
   });
 
@@ -51,11 +53,11 @@ export async function updatePostHandler(
 }
 
 export async function getPostHandler(
-  req: Request<UpdatePostInput["params"]>,
+  req: Request<ReadPostInput["params"]>,
   res: Response
 ) {
   const postId = req.params.postId;
-  const post = await findPost({ postId });
+  const post = await findPost({ _id: postId });
 
   if (!post) {
     return res.sendStatus(404);
@@ -65,26 +67,29 @@ export async function getPostHandler(
 }
 
 export async function getAllPostsHandler(
-  req: Request,
+  req: Request<ReadPostInput["params"]>,
   res: Response
 ) {
-  const posts = await findAllPosts();
+  const query = req.query;
+  console.log(query)
+
+  const posts = await findAllPosts({ ...query });
 
   if (!posts) {
-    return res.sendStatus(404);
+    return res.send([]);
   }
 
   return res.send(posts);
 }
 
 export async function deletePostHandler(
-  req: Request<UpdatePostInput["params"]>,
+  req: Request<DeletePostInput["params"]>,
   res: Response
 ) {
   const userId = res.locals.user._id;
   const postId = req.params.postId;
 
-  const post = await findPost({ postId });
+  const post = await findPost({ _id: postId });
 
   if (!post) {
     return res.sendStatus(404);
@@ -94,7 +99,7 @@ export async function deletePostHandler(
     return res.sendStatus(403);
   }
 
-  await deletePost({ postId });
+  await deletePost({ _id: postId });
 
   return res.sendStatus(200);
 }

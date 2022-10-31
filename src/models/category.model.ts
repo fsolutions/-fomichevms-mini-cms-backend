@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
-import { customAlphabet } from "nanoid";
 import { UserDocument } from "./user.model";
-
-const nanoid = customAlphabet("abcdefghijklmnopqrstuvwxyz0123456789", 10);
 
 export interface CategoryInput {
   user: UserDocument["_id"];
   title: string;
   description: string;
+  header: string;
+  alias: string;
+  text: string;
   image: string;
 }
 
@@ -15,16 +15,13 @@ export interface CategoryDocument extends CategoryInput, mongoose.Document {}
 
 const categorySchema = new mongoose.Schema(
   {
-    categoryId: {
-      type: String,
-      required: true,
-      unique: true,
-      default: () => `category_${nanoid()}`,
-    },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     title: { type: String, required: true },
     description: { type: String, required: true },
-    image: { type: String, required: true },
+    header: { type: String, required: true },
+    alias: { type: String, required: true },
+    text: { type: String },
+    image: { type: String },
   },
   {
     timestamps: false,
