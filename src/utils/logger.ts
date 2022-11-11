@@ -1,8 +1,10 @@
-import logger from "pino";
+const pino = require('pino')
 import dayjs from "dayjs";
 
-const log = logger({
-  prettyPrint: true,
+const log = pino({
+  transport: {
+    target: 'pino-pretty'
+  },
   base: {
     pid: false,
   },

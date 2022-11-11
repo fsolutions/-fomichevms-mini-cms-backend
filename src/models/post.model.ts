@@ -3,7 +3,7 @@ import { UserDocument } from "./user.model";
 import { CategoryDocument } from "./category.model";
 
 export interface PostInput {
-  user: UserDocument["_id"];
+  user_id: UserDocument["_id"];
   category_id: CategoryDocument["_id"];
   title: string;
   description: string;
@@ -21,9 +21,10 @@ export interface PostDocument extends PostInput, mongoose.Document {
 
 const postSchema = new mongoose.Schema(
   {
+    user_id: { type: String, required: true },
     category_id: { type: String, required: true },
     // category: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    // user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     title: { type: String, required: true },
     description: { type: String, required: true },
     header: { type: String, required: true },

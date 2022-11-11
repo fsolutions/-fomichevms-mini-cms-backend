@@ -7,12 +7,15 @@ import { object, number, string, TypeOf } from "zod";
  *     Post:
  *       type: object
  *       required:
+ *        - user_id
  *        - category_id
  *        - title
  *        - description
  *        - header
  *        - alias
  *       properties:
+ *         user_id:
+ *           type: string
  *         category_id:
  *           type: string
  *         title:
@@ -48,6 +51,9 @@ const payload = {
     alias: string({
       required_error: "Alias is required",
     }),
+    text: string(),
+    image: string(),
+    external_url: string()
   }),
 };
 

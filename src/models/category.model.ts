@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { UserDocument } from "./user.model";
 
 export interface CategoryInput {
-  user: UserDocument["_id"];
+  user_id: UserDocument["_id"];
   title: string;
   description: string;
   header: string;
@@ -15,7 +15,8 @@ export interface CategoryDocument extends CategoryInput, mongoose.Document {}
 
 const categorySchema = new mongoose.Schema(
   {
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    user_id: { type: String, required: true },
+    // user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     title: { type: String, required: true },
     description: { type: String, required: true },
     header: { type: String, required: true },

@@ -21,7 +21,7 @@ export async function createPostHandler(
 
   const body = req.body;
 
-  const post = await createPost({ ...body, user: userId });
+  const post = await createPost({ ...body, user_id: userId });
 
   return res.send(post);
 }
@@ -41,7 +41,7 @@ export async function updatePostHandler(
     return res.sendStatus(404);
   }
 
-  if (String(post.user) !== userId) {
+  if (String(post.user_id) !== userId) {
     return res.sendStatus(403);
   }
 
@@ -95,7 +95,7 @@ export async function deletePostHandler(
     return res.sendStatus(404);
   }
 
-  if (String(post.user) !== userId) {
+  if (String(post.user_id) !== userId) {
     return res.sendStatus(403);
   }
 

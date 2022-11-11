@@ -40,6 +40,8 @@ const payload = {
     alias: string({
       required_error: "Alias is required",
     }),
+    text: string(),
+    image: string()
   }),
 };
 

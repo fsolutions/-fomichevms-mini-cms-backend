@@ -4,12 +4,21 @@ services:
     container_name: rest-api
     restart: unless-stopped
     environment:
-      - NODE_ENV=postion
+      - NODE_ENV=production
+      - MONGODB_CONNSTRING=mongodb://${MONGO_DB_USERNAME}:${MONGO_DB_PASSWORD}@mongodb/${MONGO_DB_NAME}
     build:
         context: ./ 
 
+  mongo:
+    image: mongo
+    restart: unless-stopped
+    container_name: mongodb-service
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_DB_PASSWORD}
+
   caddy:
-    image: caddy/caddy:2.2.1-alpine
+    image: caddy/caddy:2.6.2-alpine
     container_name: caddy-service
     restart: unless-stopped
     ports:

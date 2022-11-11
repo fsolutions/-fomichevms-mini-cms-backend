@@ -21,7 +21,7 @@ export async function createCategoryHandler(
 
   const body = req.body;
 
-  const category = await createCategory({ ...body, user: userId });
+  const category = await createCategory({ ...body, user_id: userId });
 
   return res.send(category);
 }
@@ -41,7 +41,7 @@ export async function updateCategoryHandler(
     return res.sendStatus(404);
   }
 
-  if (String(category.user) !== userId) {
+  if (String(category.user_id) !== userId) {
     return res.sendStatus(403);
   }
 
@@ -92,7 +92,7 @@ export async function deleteCategoryHandler(
     return res.sendStatus(404);
   }
 
-  if (String(category.user) !== userId) {
+  if (String(category.user_id) !== userId) {
     return res.sendStatus(403);
   }
 
