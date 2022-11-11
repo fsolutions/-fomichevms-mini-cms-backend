@@ -1,14 +1,17 @@
 import mongoose from "mongoose";
-import { customAlphabet } from "nanoid";
 import { UserDocument } from "./user.model";
-
-const nanoid = customAlphabet("abcdefghijklmnopqrstuvwxyz0123456789", 10);
+import { CategoryDocument } from "./category.model";
 
 export interface PostInput {
   user: UserDocument["_id"];
+  category_id: CategoryDocument["_id"];
   title: string;
   description: string;
+  header: string;
+  alias: string;
+  text: string;
   image: string;
+  external_url: string;
 }
 
 export interface PostDocument extends PostInput, mongoose.Document {
@@ -18,16 +21,16 @@ export interface PostDocument extends PostInput, mongoose.Document {
 
 const postSchema = new mongoose.Schema(
   {
-    postId: {
-      type: String,
-      required: true,
-      unique: true,
-      default: () => `post_${nanoid()}`,
-    },
+    category_id: { type: String, required: true },
+    // category: { type: mongoose.Schema.Types.ObjectId, ref: "Category" },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     title: { type: String, required: true },
     description: { type: String, required: true },
-    image: { type: String, required: true },
+    header: { type: String, required: true },
+    alias: { type: String, required: true },
+    text: { type: String },
+    image: { type: String },
+    external_url: { type: String }
   },
   {
     timestamps: true,

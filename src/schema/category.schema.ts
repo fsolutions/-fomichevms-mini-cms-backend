@@ -9,11 +9,18 @@ import { object, number, string, TypeOf } from "zod";
  *       required:
  *        - title
  *        - description
- *        - image
+ *        - header
+ *        - alias
  *       properties:
  *         title:
  *           type: string
  *         description:
+ *           type: string
+ *         header:
+ *           type: string
+ *         alias:
+ *           type: string
+ *         text:
  *           type: string
  *         image:
  *           type: string
@@ -27,8 +34,11 @@ const payload = {
     description: string({
       required_error: "Description is required",
     }).min(120, "Description should be at least 120 characters long"),
-    image: string({
-      required_error: "Image is required",
+    header: string({
+      required_error: "Header is required",
+    }),
+    alias: string({
+      required_error: "Alias is required",
     }),
   }),
 };

@@ -7,28 +7,46 @@ import { object, number, string, TypeOf } from "zod";
  *     Post:
  *       type: object
  *       required:
+ *        - category_id
  *        - title
  *        - description
- *        - image
+ *        - header
+ *        - alias
  *       properties:
+ *         category_id:
+ *           type: string
  *         title:
  *           type: string
  *         description:
  *           type: string
+ *         header:
+ *           type: string
+ *         alias:
+ *           type: string
+ *         text:
+ *           type: string
  *         image:
+ *           type: string
+ *         external_url:
  *           type: string
  */
 
 const payload = {
   body: object({
+    category_id: string({
+      required_error: "Category is required",
+    }),
     title: string({
       required_error: "Title is required",
     }),
     description: string({
       required_error: "Description is required",
     }).min(120, "Description should be at least 120 characters long"),
-    image: string({
-      required_error: "Image is required",
+    header: string({
+      required_error: "Header is required",
+    }),
+    alias: string({
+      required_error: "Alias is required",
     }),
   }),
 };

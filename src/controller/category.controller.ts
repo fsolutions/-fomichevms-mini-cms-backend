@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import {
   CreateCategoryInput,
   UpdateCategoryInput,
+  ReadCategoryInput,
+  DeleteCategoryInput
 } from "../schema/category.schema";
 import {
   createCategory,
@@ -33,7 +35,7 @@ export async function updateCategoryHandler(
   const categoryId = req.params.categoryId;
   const update = req.body;
 
-  const category = await findCategory({ categoryId });
+  const category = await findCategory({ _id: categoryId });
 
   if (!category) {
     return res.sendStatus(404);
@@ -43,7 +45,7 @@ export async function updateCategoryHandler(
     return res.sendStatus(403);
   }
 
-  const updatedCategory = await findAndUpdateCategory({ categoryId }, update, {
+  const updatedCategory = await findAndUpdateCategory({ _id: categoryId }, update, {
     new: true,
   });
 
@@ -51,11 +53,11 @@ export async function updateCategoryHandler(
 }
 
 export async function getCategoryHandler(
-  req: Request<UpdateCategoryInput["params"]>,
+  req: Request<ReadCategoryInput["params"]>,
   res: Response
 ) {
   const categoryId = req.params.categoryId;
-  const category = await findCategory({ categoryId });
+  const category = await findCategory({ _id: categoryId });
 
   if (!category) {
     return res.sendStatus(404);
@@ -78,13 +80,13 @@ export async function getAllCategoriesHandler(
 }
 
 export async function deleteCategoryHandler(
-  req: Request<UpdateCategoryInput["params"]>,
+  req: Request<DeleteCategoryInput["params"]>,
   res: Response
 ) {
   const userId = res.locals.user._id;
   const categoryId = req.params.categoryId;
 
-  const category = await findCategory({ categoryId });
+  const category = await findCategory({ _id: categoryId });
 
   if (!category) {
     return res.sendStatus(404);
@@ -94,7 +96,7 @@ export async function deleteCategoryHandler(
     return res.sendStatus(403);
   }
 
-  await deleteCategory({ categoryId });
+  await deleteCategory({ _id: categoryId });
 
   return res.sendStatus(200);
 }

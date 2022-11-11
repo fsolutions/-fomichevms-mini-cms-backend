@@ -42,6 +42,7 @@ export async function findPost(
 }
 
 export async function findAllPosts(
+  query: FilterQuery<PostDocument>,
   options: QueryOptions = { lean: true }
 ) {
   const metricsLabels = {
@@ -50,7 +51,7 @@ export async function findAllPosts(
 
   const timer = databaseResponseTimeHistogram.startTimer();
   try {
-    const result = await PostModel.find({});
+    const result = await PostModel.find(query, {}, options);
     timer({ ...metricsLabels, success: "true" });
     return result;
   } catch (e) {

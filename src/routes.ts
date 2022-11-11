@@ -122,19 +122,19 @@ function routes(app: Express) {
    *         description: Category not found
    */
   app.put(
-    "/api/categories/:postId",
+    "/api/categories/:categoryId",
     [requireUser, validateResource(updateCategorySchema)],
     updateCategoryHandler
   );
 
   app.get(
-    "/api/categories/:postId",
+    "/api/categories/:categoryId",
     validateResource(getCategorySchema),
     getCategoryHandler
   );
 
   app.delete(
-    "/api/categories/:postId",
+    "/api/categories/:categoryId",
     [requireUser, validateResource(deleteCategorySchema)],
     deleteCategoryHandler
   );
